@@ -2,7 +2,9 @@ package com.bmhs.gametitle.game.assets.worlds;
 
 import com.badlogic.gdx.Gdx;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.bmhs.gametitle.gfx.assets.tiles.statictiles.WorldTile;
 import com.bmhs.gametitle.gfx.utils.TileHandler;
 
@@ -10,21 +12,42 @@ import com.bmhs.gametitle.gfx.utils.TileHandler;
 public class WorldGenerator {
 
     private int worldMapRows, worldMapColumns;
-
+    private int numIslands;
     private int[][] worldIntMap;
 
     public WorldGenerator (int worldMapRows, int worldMapColumns) {
         this.worldMapRows = worldMapRows;
         this.worldMapColumns = worldMapColumns;
-
+        numIslands = MathUtils.random(4);
         worldIntMap = new int[worldMapRows][worldMapColumns];
 
+        genOcean();
+        for(int temp = 0; temp <= numIslands-1; temp++){
+            genIsland();
+        }
+
         //call methods to build 2D array
-        randomize();
+        generateWorldTextFile();
 
         Gdx.app.error("WorldGenerator", "WorldGenerator(WorldTile[][][])");
     }
 
+
+    private void genIsland(){
+        Vector2 mapSeed = new Vector2(MathUtils.random(worldIntMap[0].length), MathUtils.random(worldIntMap.length));
+        System.out.println(mapSeed.y+" "+mapSeed.x);
+
+        worldIntMap[(int)mapSeed.y][(int)mapSeed.x]=4;
+
+        for(int r = 0; r < worldIntMap.length; r++){
+            for(int c = 0; c < worldIntMap[r].length; c++){
+                Vector2 tempVector = new Vector2(c,r);
+                if(tempVector.dst(mapSeed) < 20) {
+                    worldIntMap[r][c] = 18;
+                }
+            }
+        }
+    }
     public String getWorld3DArrayToString() {
         String returnString = "";
 
@@ -38,6 +61,15 @@ public class WorldGenerator {
         return returnString;
     }
 
+    public void genOcean() {
+        for(int r = 0; r < worldIntMap.length; r++) {
+            for(int c = 0; c < worldIntMap[r].length; c++) {
+
+                    worldIntMap[r][c] = 19;
+
+            }
+        }
+    }
     public void randomize() {
         for(int r = 0; r < worldIntMap.length; r++) {
             for(int c = 0; c < worldIntMap[r].length; c++) {
@@ -54,6 +86,11 @@ public class WorldGenerator {
             }
         }
         return worldTileMap;
+    }
+
+    private void generateWorldTextFile() {
+        FileHandle file = Gdx.files.local("assets/worlds/world.txt");
+        file.writeString(getWorld3DArrayToString(), false);
     }
 
 }
