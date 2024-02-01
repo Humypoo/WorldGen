@@ -39,13 +39,14 @@ public class WorldGenerator {
     private void genSeed(){
         Vector2 mapSeed = new Vector2(MathUtils.random(worldIntMap[0].length), MathUtils.random(worldIntMap.length + 1));
         System.out.println(mapSeed.y+" "+mapSeed.x);
-
+        int size;
         worldIntMap[(int)mapSeed.y][(int)mapSeed.x]=4;
 
         for(int r = 0; r < worldIntMap.length; r++){
             for(int c = 0; c < worldIntMap[r].length; c++){
                 Vector2 tempVector = new Vector2(c,r);
-                if(tempVector.dst(mapSeed) < 20) {
+                size = MathUtils.random(5,20);
+                if(tempVector.dst(mapSeed) < size) {
                     worldIntMap[r][c] = 19;
                 }
             }
