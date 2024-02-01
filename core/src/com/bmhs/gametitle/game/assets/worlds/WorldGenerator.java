@@ -25,7 +25,9 @@ public class WorldGenerator {
         for(int temp = 0; temp <= numIslands-1; temp++){
             genSeed();
         }
-        genSand();
+        genSandAndGrass();
+        cleanSeeds();
+        fillGrass();
 
         //call methods to build 2D array
         generateWorldTextFile();
@@ -35,7 +37,7 @@ public class WorldGenerator {
 
 
     private void genSeed(){
-        Vector2 mapSeed = new Vector2(MathUtils.random(worldIntMap[0].length), MathUtils.random(worldIntMap.length));
+        Vector2 mapSeed = new Vector2(MathUtils.random(worldIntMap[0].length), MathUtils.random(worldIntMap.length + 1));
         System.out.println(mapSeed.y+" "+mapSeed.x);
 
         worldIntMap[(int)mapSeed.y][(int)mapSeed.x]=4;
@@ -43,14 +45,14 @@ public class WorldGenerator {
         for(int r = 0; r < worldIntMap.length; r++){
             for(int c = 0; c < worldIntMap[r].length; c++){
                 Vector2 tempVector = new Vector2(c,r);
-                if(tempVector.dst(mapSeed) < 15) {
+                if(tempVector.dst(mapSeed) < 20) {
                     worldIntMap[r][c] = 19;
                 }
             }
         }
     }
 
-    private void genSand(){
+    private void genSandAndGrass(){
         int randInt;
 
         for(int r = 0; r < worldIntMap.length; r++){
@@ -62,8 +64,11 @@ public class WorldGenerator {
                         for(int rows = 0; rows < worldIntMap.length; rows++){
                             for(int columns = 0; columns < worldIntMap[r].length; columns++){
                                 Vector2 tempVector = new Vector2(columns,rows);
-                                if(tempVector.dst(sandSeed) < 8) {
+                                if(tempVector.dst(sandSeed) < 10) {
                                     worldIntMap[rows][columns] = 16;
+                                }
+                                if(tempVector.dst(sandSeed) < 8) {
+                                    worldIntMap[rows][columns] = 18;
                                 }
                             }
                         }
@@ -72,8 +77,23 @@ public class WorldGenerator {
             }
         }
     }
+    private void fillGrass(){
 
+        for(int r = 0; r < worldIntMap.length; r++){
+            for(int c = 0;c  < worldIntMap[r].length; c++) {
 
+            }
+        }
+    }
+    private void cleanSeeds() {
+        for (int r = 0; r < worldIntMap.length; r++) {
+            for (int c = 0; c < worldIntMap[r].length; c++) {
+                if(worldIntMap[r][c] == 19){
+                    worldIntMap[r][c] = 20;
+                }
+            }
+        }
+    }
 
 
     public String getWorld3DArrayToString() {
