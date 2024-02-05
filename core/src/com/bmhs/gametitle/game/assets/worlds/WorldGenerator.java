@@ -22,7 +22,7 @@ public class WorldGenerator {
         worldIntMap = new int[worldMapRows][worldMapColumns];
 
         genOcean();
-        for(int temp = 0; temp <= numIslands-1; temp++){
+        for(int temp = 0; temp <= numIslands; temp++){
             genSeed();
         }
         genSandAndGrass();
