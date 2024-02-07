@@ -46,7 +46,7 @@ public class NPCTestScreen implements Screen {
         game.batch.begin();
 
         for(int i = 0; i < numOfNPCs; i ++){
-            NonPlayerCharacter tempChar = npcArray.get(0);
+            NonPlayerCharacter tempChar = npcArray.get(i);
             tempChar.tickTree();
             game.batch.draw(tempChar.getTile().getTexture(), tempChar.getX(),tempChar.getY());
         }
