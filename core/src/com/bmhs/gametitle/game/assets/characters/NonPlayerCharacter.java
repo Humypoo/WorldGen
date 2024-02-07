@@ -45,5 +45,10 @@ public class NonPlayerCharacter extends Character{
         }
     }
 
-
+    public void walk(){
+        if(Math.random() > .95) {
+            adjustX(MathUtils.random(-5,5));
+            adjustY(MathUtils.random(-5,5));
+        }
+    }
 }
