@@ -14,20 +14,26 @@ public class WorldGenerator {
     private int worldMapRows, worldMapColumns;
     private int numIslands;
     private int[][] worldIntMap;
+    private int[][] seedArray;
 
     public WorldGenerator (int worldMapRows, int worldMapColumns) {
         this.worldMapRows = worldMapRows;
         this.worldMapColumns = worldMapColumns;
         numIslands = MathUtils.random(3,10);
         worldIntMap = new int[worldMapRows][worldMapColumns];
+        seedArray = new int[worldMapRows][worldMapColumns];
 
         genOcean();
         for(int temp = 0; temp <= numIslands; temp++){
             genSeed();
         }
-        genSandAndGrass();
+        genSand();
+        genGrass();
+        genThirdLayer();
+        genFourthLayer();
+        genFifthLayer();
         cleanSeeds();
-        fillGrass();
+
 
         //call methods to build 2D array
         generateWorldTextFile();
@@ -53,7 +59,7 @@ public class WorldGenerator {
         }
     }
 
-    private void genSandAndGrass(){
+    private void genSand(){
         int randInt;
 
         for(int r = 0; r < worldIntMap.length; r++){
@@ -62,15 +68,14 @@ public class WorldGenerator {
                     randInt = (MathUtils.random(1,10));
                     if(randInt == 1){
                         Vector2 sandSeed = new Vector2(c,r);
+                        seedArray[r][c] = 1;
                         for(int rows = 0; rows < worldIntMap.length; rows++){
                             for(int columns = 0; columns < worldIntMap[r].length; columns++){
                                 Vector2 tempVector = new Vector2(columns,rows);
-                                if(tempVector.dst(sandSeed) < 10) {
+                                if(tempVector.dst(sandSeed) < 12) {
                                     worldIntMap[rows][columns] = 16;
                                 }
-                                if(tempVector.dst(sandSeed) < 8) {
-                                    worldIntMap[rows][columns] = 18;
-                                }
+
                             }
                         }
                     }
@@ -78,14 +83,86 @@ public class WorldGenerator {
             }
         }
     }
-    private void fillGrass(){
+    private void genGrass(){
 
         for(int r = 0; r < worldIntMap.length; r++){
             for(int c = 0;c  < worldIntMap[r].length; c++) {
+                if (seedArray[r][c] == 1){
+                    Vector2 seed = new Vector2(c,r);
+                    for(int rows = 0; rows < worldIntMap.length; rows++){
+                        for(int columns = 0; columns < worldIntMap[r].length; columns++){
+                            Vector2 tempVector = new Vector2(columns,rows);
+                            if(tempVector.dst(seed) < 9) {
+                                worldIntMap[rows][columns] = 18;
+                            }
 
+                        }
+                    }
+                }
             }
         }
     }
+
+    private void genThirdLayer(){
+
+        for(int r = 0; r < worldIntMap.length; r++){
+            for(int c = 0;c  < worldIntMap[r].length; c++) {
+                if (seedArray[r][c] == 1){
+                    Vector2 seed = new Vector2(c,r);
+                    for(int rows = 0; rows < worldIntMap.length; rows++){
+                        for(int columns = 0; columns < worldIntMap[r].length; columns++){
+                            Vector2 tempVector = new Vector2(columns,rows);
+                            if(tempVector.dst(seed) < 6) {
+                                worldIntMap[rows][columns] = 15;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void genFourthLayer(){
+
+        for(int r = 0; r < worldIntMap.length; r++){
+            for(int c = 0;c  < worldIntMap[r].length; c++) {
+                if (seedArray[r][c] == 1){
+                    Vector2 seed = new Vector2(c,r);
+                    for(int rows = 0; rows < worldIntMap.length; rows++){
+                        for(int columns = 0; columns < worldIntMap[r].length; columns++){
+                            Vector2 tempVector = new Vector2(columns,rows);
+                            if(tempVector.dst(seed) < 4) {
+                                worldIntMap[rows][columns] = 14;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void genFifthLayer(){
+
+        for(int r = 0; r < worldIntMap.length; r++){
+            for(int c = 0;c  < worldIntMap[r].length; c++) {
+                if (seedArray[r][c] == 1){
+                    Vector2 seed = new Vector2(c,r);
+                    for(int rows = 0; rows < worldIntMap.length; rows++){
+                        for(int columns = 0; columns < worldIntMap[r].length; columns++){
+                            Vector2 tempVector = new Vector2(columns,rows);
+                            if(tempVector.dst(seed) < 2) {
+                                worldIntMap[rows][columns] = 13;
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void cleanSeeds() {
         for (int r = 0; r < worldIntMap.length; r++) {
             for (int c = 0; c < worldIntMap[r].length; c++) {
