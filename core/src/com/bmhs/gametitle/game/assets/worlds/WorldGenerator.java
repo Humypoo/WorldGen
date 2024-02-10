@@ -53,7 +53,7 @@ public class WorldGenerator {
                 Vector2 tempVector = new Vector2(c,r);
                 size = MathUtils.random(5,20);
                 if(tempVector.dst(mapSeed) < size) {
-                    worldIntMap[r][c] = 19;
+                    worldIntMap[r][c] = 11;
                 }
             }
         }
@@ -64,7 +64,7 @@ public class WorldGenerator {
 
         for(int r = 0; r < worldIntMap.length; r++){
             for(int c = 0; c < worldIntMap[r].length; c++){
-                if (worldIntMap[r][c] == 19) {
+                if (worldIntMap[r][c] == 11) {
                     randInt = (MathUtils.random(1,10));
                     if(randInt == 1){
                         Vector2 sandSeed = new Vector2(c,r);
@@ -73,7 +73,7 @@ public class WorldGenerator {
                             for(int columns = 0; columns < worldIntMap[r].length; columns++){
                                 Vector2 tempVector = new Vector2(columns,rows);
                                 if(tempVector.dst(sandSeed) < 12) {
-                                    worldIntMap[rows][columns] = 16;
+                                    worldIntMap[rows][columns] = 17;
                                 }
 
                             }
@@ -93,7 +93,7 @@ public class WorldGenerator {
                         for(int columns = 0; columns < worldIntMap[r].length; columns++){
                             Vector2 tempVector = new Vector2(columns,rows);
                             if(tempVector.dst(seed) < 9) {
-                                worldIntMap[rows][columns] = 18;
+                                worldIntMap[rows][columns] = 19;
                             }
 
                         }
@@ -113,7 +113,7 @@ public class WorldGenerator {
                         for(int columns = 0; columns < worldIntMap[r].length; columns++){
                             Vector2 tempVector = new Vector2(columns,rows);
                             if(tempVector.dst(seed) < 6) {
-                                worldIntMap[rows][columns] = 15;
+                                worldIntMap[rows][columns] = 16;
                             }
 
                         }
@@ -166,8 +166,8 @@ public class WorldGenerator {
     private void cleanSeeds() {
         for (int r = 0; r < worldIntMap.length; r++) {
             for (int c = 0; c < worldIntMap[r].length; c++) {
-                if(worldIntMap[r][c] == 19){
-                    worldIntMap[r][c] = 20;
+                if(worldIntMap[r][c] == 11){
+                    worldIntMap[r][c] = 21;
                 }
             }
         }
@@ -191,7 +191,7 @@ public class WorldGenerator {
         for(int r = 0; r < worldIntMap.length; r++) {
             for(int c = 0; c < worldIntMap[r].length; c++) {
 
-                    worldIntMap[r][c] = 20;
+                    worldIntMap[r][c] = 21;
 
             }
         }
